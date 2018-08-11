@@ -57,5 +57,15 @@
     <script>
         let negociacaoController = new NegociacaoController();
     </script>
+    <script>
+        let listaNegociacoes = new Proxy(new ListaNegociacoes(), {
+            get: function(target, prop, receiver){
+                console.log(`${prop} foi interceptada`);
+                console.log(target);
+                console.log(receiver);
+            }
+        });
+        console.log(listaNegociacoes.negociacoes);
+    </script>
 </body>
 </html>
