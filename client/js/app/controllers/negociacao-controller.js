@@ -5,7 +5,7 @@ class NegociacaoController {
         this._inputData = $('#data');
         this._inputQuantidade = $('#quantidade');
         this._inputValor = $('#valor');
-        this._listaNegociacoes = new ListaNegociacoes(function (modelo) {
+        this._listaNegociacoes = new ListaNegociacoes(this, function (modelo) {
             // esta função é chamada em lista-negociacoes, portanto this é uma instância de ListaNegociacoes
             this._negociacoesView.update(modelo);
         });
