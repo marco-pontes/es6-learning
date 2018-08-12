@@ -59,14 +59,17 @@
     </script>
     <script>
         let listaNegociacoes = new Proxy(new ListaNegociacoes(), {
-            set : function(target, prop, value, receiver) {
-                console.log(`A propriedade ${prop} do target: ${typeof target} foi atualizada.
-                 Valor anterior: ${target[prop]}
-                 Novo valor: ${value}
-                 Receiver: ${typeof receiver}`);
-                return Reflect.set(target, prop, value, receiver);
+            get(target, prop, receiver) {
+
+                if(['adiciona', 'esvazia'].includes(prop) && typeof(target[prop]) == typeof(Function)) {
+                    return function () {
+                        console.log(`Interceptando function: ${prop}`);
+                        Reflect.apply(target[prop], target, arguments);
+                    }
+                }
+                return Reflect.get(target, prop, receiver);
             }
-        })
+        });
         listaNegociacoes.adiciona(new Negociacao(new Date(), 20, 200));
         listaNegociacoes.esvazia();
     </script>
