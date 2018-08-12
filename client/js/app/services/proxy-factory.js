@@ -5,16 +5,17 @@ class ProxyFactory {
 
                 if(props.includes(prop) && ProxyFactory.isFunction(target[prop])) {
                     return function () {
-                        console.log(`Interceptando function: ${prop}`);
+                        console.log(`Interceptando get function: ${prop}`);
                         let result = Reflect.apply(target[prop], target, arguments);
                         acao(target);
                         return result;
                     }
                 }
+                console.log(`Interceptando get: ${prop}`);
                 return Reflect.get(target, prop, receiver);
             },
             set(target, prop, value, receiver) {
-                console.log(`Interceptando function(set): ${prop}`);
+                console.log(`Interceptando set: ${prop}`);
                 let result = Reflect.set(target, prop, value, receiver);
                 if(props.includes(prop)) {
                     acao(target);
