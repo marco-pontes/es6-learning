@@ -13,7 +13,7 @@ class NegociacaoService {
                         resolve(negociacoes);
                     } else {
                         console.log(xhr.responseText);
-                        reject('Não foi possível obter as negociações');
+                        reject('Não foi possível obter as negociações da semana');
                     }
                 }
             };
