@@ -23,17 +23,16 @@ class NegociacaoController {
         event.preventDefault();
         let service = new NegociacaoService();
         let dados = this.getDados();
-        service.salva(dados, (erro) => {
-            if(erro) {
-                this._mensagem.texto = erro;
-            } else {
+        service.salva(dados)
+            .then(resposta => {
                 let negociacao = this.criaNegociacao(dados);
                 this._listaNegociacoes.adiciona(negociacao);
-                this._mensagem.texto = 'Negociação adicionada com sucesso!';
+                this._mensagem.texto = `Negociação adicionada com sucesso! ${resposta}`;
                 this.limpaCampos();
-            }
-        });
-
+            })
+            .catch((erro) => {
+                this._mensagem.texto = erro;
+            });
     }
 
     getDados() {
@@ -52,15 +51,10 @@ class NegociacaoController {
     importaNegociacoes () {
         let service = new NegociacaoService();
 
-        Promise.all([
-            service.obterNegociacoesDaSemana(),
-            service.obterNegociacoesDaSemanaAnterior(),
-            service.obterNegociacoesDaSemanaRetrasada()]
-        ).then(negociacoes => {
+        service.obterNegociacoes()
+            .then(negociacoes => {
             console.log(negociacoes)
-            negociacoes
-                .reduce((arrayAchatado, array) => arrayAchatado.concat(array), [])
-                .forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
+            negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
             this._mensagem.texto = 'Negociações obtidas com sucesso'
         }).catch(erro => this._mensagem.texto = erro);
     }

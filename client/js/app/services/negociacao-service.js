@@ -34,19 +34,23 @@ class NegociacaoService {
             });
     }
 
-    salva(objeto, cb) {
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", "/negociacoes", true);
-        xhr.setRequestHeader("Content-type", "application/json");
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState == 4) {
-                if (xhr.status == 200) {
-                    cb(null);
-                } else {
-                    cb(`Não foi possível salvar a negociação: ${xhr.responseText}`);
-                }
-            }
-        }
-        xhr.send(JSON.stringify(objeto));
+    obterNegociacoes() {
+        return Promise.all([
+            this.obterNegociacoesDaSemana(),
+            this.obterNegociacoesDaSemanaAnterior(),
+            this.obterNegociacoesDaSemanaRetrasada()]
+        ).then(negociacoes => {
+            let arrayAchatado = negociacoes.reduce((arrayAchatado, array) => arrayAchatado.concat(array), []);
+            return arrayAchatado;
+        }).catch(erro => { throw new Error(erro); });
+    }
+
+    salva(objeto) {
+        return this._http.post('/negociacoes', objeto).then((resposta) => {
+            return resposta;
+        }).catch((erro) => {
+            console.log(erro);
+            throw new Error('Não foi possível salvar a negociação');
+        });
     }
 }
