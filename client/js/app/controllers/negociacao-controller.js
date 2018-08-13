@@ -21,11 +21,27 @@ class NegociacaoController {
 
     adiciona(event) {
         event.preventDefault();
-        let negociacao = this.criaNegociacao();
-        this._listaNegociacoes.adiciona(negociacao);
-        this._mensagem.texto = 'Negociação adicionada com sucesso!';
-        this.limpaCampos();
+        let service = new NegociacaoService();
+        let dados = this.getDados();
+        service.salva(dados, (erro) => {
+            if(erro) {
+                this._mensagem.texto = erro;
+            } else {
+                let negociacao = this.criaNegociacao(dados);
+                this._listaNegociacoes.adiciona(negociacao);
+                this._mensagem.texto = 'Negociação adicionada com sucesso!';
+                this.limpaCampos();
+            }
+        });
 
+    }
+
+    getDados() {
+        return {
+            data: this._inputData.value,
+            quantidade: this._inputQuantidade.value,
+            valor: this._inputValor.value
+        };
     }
 
     apaga() {
@@ -45,11 +61,11 @@ class NegociacaoController {
         });
     }
 
-    criaNegociacao(){
+    criaNegociacao(dados){
         return new Negociacao(
-            DateHelper.textoParaData(this._inputData.value),
-            this._inputQuantidade.value,
-            this._inputValor.value
+            DateHelper.textoParaData(dados.data),
+            dados.quantidade,
+            dados.valor
         );
     }
 
