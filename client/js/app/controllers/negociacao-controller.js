@@ -20,14 +20,12 @@ class NegociacaoController {
         );
 
         ConnectionFactory.getConnection()
-            .then(connection => {
-                new NegociacaoDao(connection)
-                    .lista()
-                    .then(negociacoes => {
-                        negociacoes.forEach(negociacao => {
-                            this._listaNegociacoes.adiciona(negociacao);
-                        });
-                    });
+            .then(connection => new NegociacaoDao(connection))
+            .then(dao => dao.lista())
+            .then(negociacoes => {
+                negociacoes.forEach(negociacao => {
+                    this._listaNegociacoes.adiciona(negociacao);
+                });
             });
     }
 
