@@ -21,11 +21,14 @@ class NegociacaoController {
 
         ConnectionFactory.getConnection()
             .then(connection => new NegociacaoDao(connection))
-            .then(dao => dao.lista())
+            .then(dao => dao.listaTodos())
             .then(negociacoes => {
                 negociacoes.forEach(negociacao => {
                     this._listaNegociacoes.adiciona(negociacao);
                 });
+            })
+            .catch(erro => {
+                this._mensagem.texto = erro;
             });
     }
 
@@ -62,8 +65,17 @@ class NegociacaoController {
     }
 
     apaga() {
-        this._listaNegociacoes.esvazia();
-        this._mensagem.texto = 'Negociações apagadas com sucesso';
+        ConnectionFactory.getConnection()
+            .then(connection => new NegociacaoDao(connection))
+            .then(dao => dao.apagaTodos())
+            .then(mensagem => {
+                this._listaNegociacoes.esvazia();
+                this._mensagem.texto = mensagem;
+
+            })
+            .catch(erro => {
+                this._mensagem.texto = erro;
+            });
     }
 
     ordena(coluna) {

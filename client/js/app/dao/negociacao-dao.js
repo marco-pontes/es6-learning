@@ -22,7 +22,7 @@ class NegociacaoDao {
         });
     }
 
-    lista () {
+    listaTodos () {
         return new Promise((resolve, reject) => {
             let cursor = this.connection
                 .transaction([this.store], 'readwrite')
@@ -44,6 +44,23 @@ class NegociacaoDao {
             cursor.onerror = (e) => {
                 console.log(e.target.error.name);
                 reject(`Não foi possível listar as negociações: ${e.target.error.name}`);
+            }
+        });
+    }
+
+    apagaTodos () {
+        return new Promise((resolve, reject) => {
+            let request = this.connection
+                .transaction([this.store], 'readwrite')
+                .objectStore(this.store)
+                .clear();
+
+            request.onsuccess = (e) => {
+                resolve('Negociações apagadas com sucesso');
+            }
+            request.onerror = (e) => {
+                console.log(e.target.error)
+                reject(`Não foi possível apagar as negociações: ${e.target.error.name}`);
             }
         });
     }
