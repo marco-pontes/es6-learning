@@ -18,6 +18,13 @@ class NegociacaoController {
             new MensagemView($('#mensagem-view')),
             'texto'
         );
+        this.init();
+    }
+
+    init() {
+        setInterval(() => {
+            this.importaNegociacoes();
+        }, 3000)
 
         ConnectionFactory.getConnection()
             .then(connection => new NegociacaoDao(connection))
@@ -91,7 +98,7 @@ class NegociacaoController {
         let service = new NegociacaoService();
 
         service.obterNegociacoes()
-            .then(negociacoes => 
+            .then(negociacoes =>
                 negociacoes.filter(negociacao =>
                     !this._listaNegociacoes.negociacoes.some(item =>
                         JSON.stringify(item) != JSON.stringify(negociacao)
