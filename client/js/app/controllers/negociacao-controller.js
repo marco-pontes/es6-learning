@@ -91,8 +91,11 @@ class NegociacaoController {
         let service = new NegociacaoService();
 
         service.obterNegociacoes()
-            .then(negociacoes => negociacoes.filter(negociacao =>
-                this._listaNegociacoes.negociacoes.indexOf(negociacao) == - 1
+            .then(negociacoes => 
+                negociacoes.filter(negociacao =>
+                    !this._listaNegociacoes.negociacoes.some(item =>
+                        JSON.stringify(item) != JSON.stringify(negociacao)
+                    )
                 )
             )
             .then(negociacoes => {
