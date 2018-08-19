@@ -91,6 +91,10 @@ class NegociacaoController {
         let service = new NegociacaoService();
 
         service.obterNegociacoes()
+            .then(negociacoes => negociacoes.filter(negociacao =>
+                this._listaNegociacoes.negociacoes.indexOf(negociacao) == - 1
+                )
+            )
             .then(negociacoes => {
             console.log(negociacoes)
             negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
