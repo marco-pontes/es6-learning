@@ -18,17 +18,17 @@ class NegociacaoController {
             new MensagemView($('#mensagem-view')),
             'texto'
         );
+        this._service = new NegociacaoService();
         this.init();
     }
 
     init() {
         setInterval(() => {
             this.importaNegociacoes();
-        }, 3000)
+        }, 3000);
 
-        ConnectionFactory.getConnection()
-            .then(connection => new NegociacaoDao(connection))
-            .then(dao => dao.listaTodos())
+        this._service
+            .lista()
             .then(negociacoes => {
                 negociacoes.forEach(negociacao => {
                     this._listaNegociacoes.adiciona(negociacao);
@@ -43,7 +43,7 @@ class NegociacaoController {
         event.preventDefault();
         let dados = this.getDados();
         let negociacao = this.criaNegociacao(dados);
-        new NegociacaoService()
+        this._service
             .cadastra(negociacao)
             .then(mensagem => {
                 this._listaNegociacoes.adiciona(negociacao);
@@ -69,9 +69,8 @@ class NegociacaoController {
     }
 
     apaga() {
-        ConnectionFactory.getConnection()
-            .then(connection => new NegociacaoDao(connection))
-            .then(dao => dao.apagaTodos())
+        this._service
+            .apagaTodos()
             .then(mensagem => {
                 this._listaNegociacoes.esvazia();
                 this._mensagem.texto = mensagem;
@@ -92,20 +91,12 @@ class NegociacaoController {
     }
 
     importaNegociacoes () {
-        let service = new NegociacaoService();
-
-        service.obterNegociacoes()
-            .then(negociacoes =>
-                negociacoes.filter(negociacao =>
-                    !this._listaNegociacoes.negociacoes.some(item =>
-                        JSON.stringify(item) != JSON.stringify(negociacao)
-                    )
-                )
-            )
+        this._service
+            .importa(this._listaNegociacoes.negociacoes)
             .then(negociacoes => {
-            console.log(negociacoes)
-            negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
-            this._mensagem.texto = 'Negociações obtidas com sucesso'
+                console.log(negociacoes)
+                negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
+                this._mensagem.texto = 'Negociações obtidas com sucesso'
         }).catch(erro => this._mensagem.texto = erro);
     }
 
