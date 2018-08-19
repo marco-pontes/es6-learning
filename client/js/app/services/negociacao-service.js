@@ -53,4 +53,14 @@ class NegociacaoService {
             throw new Error('Não foi possível salvar a negociação');
         });
     }
+
+    cadastra(objeto) {
+        return ConnectionFactory.getConnection().then(connection =>
+            new NegociacaoDao(connection))
+            .then(dao => dao.adiciona(objeto))
+            .then(() => 'Negociação adicionada com sucesso!')
+            .catch(() => {
+                throw new Error('Não foi possível salvar a negociação')
+            });
+    }
 }
