@@ -5,6 +5,7 @@ import NegociacoesView from '../views/negociacoes-view';
 import MensagemView from '../views/mensagem-view';
 import DateHelper from '../helpers/date-helper';
 import Bind from '../helpers/bind';
+import NegociacaoService from '../services/negociacao-service';
 
 class NegociacaoController {
 

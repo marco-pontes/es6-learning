@@ -1,4 +1,5 @@
 import View from './view';
+import DateHelper from '../helpers/date-helper'
 
 class NegociacoesView extends View {
 

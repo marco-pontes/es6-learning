@@ -12,7 +12,7 @@
     <h1 class="text-center">Negociações</h1>
     <div id="mensagem-view"></div>
 
-    <form class="form" onsubmit="negociacaoController.adiciona(event)">
+    <form class="form">
 
         <div class="form-group">
             <label for="data">Data</label>
@@ -33,7 +33,7 @@
     </form>
 
     <div class="text-center">
-        <button class="btn btn-primary text-center" type="button" onclick="negociacaoController.apaga()">
+        <button class="btn btn-primary text-center" id="apaga" type="button" onclick="negociacaoController.apaga()">
             Apagar
         </button>
     </div>
@@ -45,7 +45,14 @@
     <script> var exports = {}; </script>
     <script src="node_modules/systemjs/dist/system.js"></script>
     <script>
-        System.defaultJSExtensions = true;
+
+        System.config({
+            packages: {
+                'js/app': {
+                    defaultExtension: 'js'
+                }
+            }
+        })
         System.import('js/app/boot').catch(function (err) {
             console.error(err);
         });
