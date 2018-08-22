@@ -43,23 +43,12 @@
 
     </div>
     <script> var exports = {}; </script>
-    <script src="js/app/polyfill/fetch.js"></script>
-    <script src="js/app/models/negociacao.js"></script>
-    <script src="js/app/models/mensagem.js"></script>
-    <script src="js/app/models/lista-negociacoes.js"></script>
-    <script src="js/app/controllers/negociacao-controller.js"></script>
-    <script src="js/app/services/negociacao-service.js"></script>
-    <script src="js/app/services/http-service.js"></script>
-    <script src="js/app/helpers/date-helper.js"></script>
-    <script src="js/app/views/view.js"></script>
-    <script src="js/app/views/negociacoes-view.js"></script>
-    <script src="js/app/views/mensagem-view.js"></script>
-    <script src="js/app/services/proxy-factory.js"></script>
-    <script src="js/app/services/connection-factory.js"></script>
-    <script src="js/app/helpers/bind.js"></script>
-    <script src="js/app/dao/negociacao-dao.js"></script>
+    <script src="node_modules/systemjs/dist/system.js"></script>
     <script>
-        let negociacaoController = new NegociacaoController();
+        System.defaultJSExtensions = true;
+        System.import('js/app/boot').catch(function (err) {
+            console.error(err);
+        });
     </script>
 </body>
 </html>
