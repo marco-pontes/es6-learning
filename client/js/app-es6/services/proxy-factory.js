@@ -29,3 +29,5 @@ class ProxyFactory {
         return typeof(func) == typeof(Function);
     }
 }
+
+export default ProxyFactory;

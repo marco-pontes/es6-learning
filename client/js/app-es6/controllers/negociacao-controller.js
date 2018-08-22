@@ -1,3 +1,11 @@
+import ListaNegociacoes from '../models/lista-negociacoes';
+import Negociacao from '../models/negociacao';
+import {Mensagem} from '../models/mensagem';
+import NegociacoesView from '../views/negociacoes-view';
+import MensagemView from '../views/mensagem-view';
+import DateHelper from '../helpers/date-helper';
+import Bind from '../helpers/bind';
+
 class NegociacaoController {
 
     constructor () {
@@ -92,7 +100,8 @@ class NegociacaoController {
 
     importaNegociacoes () {
         this._service
-            .importa(this._listaNegociacoes.negociacoes)
+            .importa(this._listaNegociacoes.negociacoes
+            )
             .then(negociacoes => {
                 console.log(negociacoes)
                 negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
@@ -123,6 +132,6 @@ class NegociacaoController {
 
         this._inputData.focus();
     }
-
-
 }
+
+export default NegociacaoController;

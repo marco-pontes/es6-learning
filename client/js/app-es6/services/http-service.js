@@ -21,5 +21,6 @@ class HttpService {
             body: JSON.stringify(dado)
         }).then(res => this.handleErrors(res));
     }
-
 }
+
+export default HttpService;

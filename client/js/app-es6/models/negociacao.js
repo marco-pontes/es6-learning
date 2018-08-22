@@ -25,5 +25,6 @@ class Negociacao {
     equals(outraNegociacao) {
         return JSON.stringify(this) == JSON.stringify(outraNegociacao)
     }
-
 }
+
+export default Negociacao;

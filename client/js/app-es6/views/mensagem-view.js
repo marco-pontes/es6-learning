@@ -1,3 +1,5 @@
+import View from './view';
+
 class MensagemView extends View {
 
     template(modelo) {
@@ -6,3 +8,5 @@ class MensagemView extends View {
 
 
 }
+
+export default MensagemView;

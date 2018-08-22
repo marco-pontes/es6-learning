@@ -1,3 +1,8 @@
+import HttpService from './http-service';
+import ConnectionFactory from './connection-factory';
+import NegociacaoDao from '../dao/negociacao-dao';
+import Negociacao from '../models/negociacao';
+
 class NegociacaoService {
 
     constructor () {
@@ -101,3 +106,4 @@ class NegociacaoService {
             });
     }
 }
+export default NegociacaoService;

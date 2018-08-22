@@ -1,3 +1,4 @@
+import ProxyFactory from '../services/proxy-factory';
 class Bind {
 
     constructor(model, view, ...props) {
@@ -6,3 +7,5 @@ class Bind {
         return proxy;
     }
 }
+
+export default Bind;

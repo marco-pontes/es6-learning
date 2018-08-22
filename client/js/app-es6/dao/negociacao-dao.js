@@ -1,3 +1,5 @@
+import Negociacao from '../models/negociacao';
+
 class NegociacaoDao {
 
     constructor (connection) {
@@ -64,6 +66,6 @@ class NegociacaoDao {
             }
         });
     }
-
-
 }
+
+export default NegociacaoDao;

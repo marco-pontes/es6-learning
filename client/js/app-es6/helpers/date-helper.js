@@ -22,5 +22,6 @@ class DateHelper {
                 return item;
             }));
     }
-
 }
+
+export default DateHelper;

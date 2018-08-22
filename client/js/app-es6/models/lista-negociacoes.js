@@ -27,3 +27,5 @@ class ListaNegociacoes {
         this._negociacoes.reverse();
     }
 }
+
+export default ListaNegociacoes;

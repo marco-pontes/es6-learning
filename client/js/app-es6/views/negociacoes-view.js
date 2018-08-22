@@ -1,3 +1,5 @@
+import View from './view';
+
 class NegociacoesView extends View {
 
     template(modelo) {
@@ -32,5 +34,6 @@ class NegociacoesView extends View {
                 </tfoot>
             </table>`;
     }
-
 }
+
+export default NegociacoesView;
